@@ -1,3 +1,5 @@
+package ejercicios;
+
 public class Ejercicio4_Electrodomestico {
 
     protected double precioBase;
