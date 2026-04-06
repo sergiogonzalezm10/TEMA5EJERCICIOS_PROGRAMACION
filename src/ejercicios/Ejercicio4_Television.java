@@ -1,3 +1,5 @@
+package ejercicios;
+
 public class Ejercicio4_Television extends Ejercicio4_Electrodomestico {
 
     private int resolucion;
