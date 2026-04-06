@@ -1,3 +1,5 @@
+package ejercicios;
+
 public class Ejercicio4_Lavadora extends Ejercicio4_Electrodomestico {
 
     private double carga;
