@@ -1,3 +1,5 @@
+package ejercicios;
+
 import java.util.ArrayList;
 
 public class Ejercicio4_Main {
