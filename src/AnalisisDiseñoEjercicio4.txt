@@ -1,0 +1,147 @@
+================================================================================
+  ANÁLISIS Y DISEÑO - EJERCICIO 4 - Vehículos
+================================================================================
+
+1. ANÁLISIS
+
+SUPERCLASE: Ejercicio4_Vehiculo  (abstracta)
+  Atributos (protected, heredables):
+    - marca           : String
+    - modelo          : String
+    - color           : String
+    - matricula       : String
+    - motorEncendido  : boolean
+    - marchaActual    : int
+    - velocidadActual : int
+
+  Valores por defecto:
+    - motorEncendido  = false
+    - marchaActual    = 0
+    - velocidadActual = 0
+
+  Constructores:
+    1. Vehiculo(marca, modelo, color, matricula)
+
+  Métodos:
+    - arrancar()           : void   enciende el motor si estaba apagado
+    - parar()              : void   para y apaga el motor
+    - subirMarcha()        : void   sube una marcha (máximo 5ª)
+    - bajarMarcha()        : void   baja una marcha (mínimo 1ª)
+    - getters / setters de todos los atributos
+
+  Rangos de marcha para la simulación:
+    1ª :   0 - 30  km/h
+    2ª :  30 - 50  km/h
+    3ª :  50 - 70  km/h
+    4ª :  70 - 100 km/h
+    5ª : 100+      km/h
+
+SUBCLASE: Ejercicio4_Turismo  extends  Ejercicio4_Vehiculo
+  Atributos propios:
+    - numPlazas : int     (por defecto 5)
+    - tipoUso   : String  (por defecto "particular")
+
+  Constructores:
+    1. Turismo(marca, modelo, color, matricula)
+         numPlazas y tipoUso por defecto
+    2. Turismo(marca, modelo, color, matricula, numPlazas, tipoUso)
+
+  Métodos:
+    - getters / setters de numPlazas y tipoUso
+
+SUBCLASE: Ejercicio4_Camion  extends  Ejercicio4_Vehiculo
+  Atributos propios:
+    - pesoMaxAutorizado  : double   (por defecto 1000.0 kg)
+    - mercanciaPeligrosa : boolean  (por defecto false)
+
+  Constructores:
+    1. Camion(marca, modelo, color, matricula)
+    2. Camion(marca, modelo, color, matricula, pesoMaxAutorizado, mercanciaPeligrosa)
+
+  Métodos:
+    - getters / setters de pesoMaxAutorizado y mercanciaPeligrosa
+
+SUBCLASE: Ejercicio4_Motocicleta  extends  Ejercicio4_Vehiculo
+  Atributos propios:
+    - cilindrada : int  (por defecto 50 CC)
+
+  Constructores:
+    1. Motocicleta(marca, modelo, color, matricula)
+    2. Motocicleta(marca, modelo, color, matricula, cilindrada)
+
+  Métodos:
+    - requiereCarnet() : boolean   devuelve true si cilindrada >= 125 CC
+    - getters / setters de cilindrada
+
+CLASE EJECUTABLE: Ejercicio4_Main
+  - Crea un Turismo en reposo
+  - Pide velocidad objetivo y tiempo de espera por teclado
+  - Simula: arrancar → acelerar → mantener → desacelerar → parar
+
+
+2. DISEÑO
+
+------------------------------------------------------------
+|               <<abstract>>                               |
+|            Ejercicio4_Vehiculo                           |
+------------------------------------------------------------
+| # marca           : String                              |
+| # modelo          : String                              |
+| # color           : String                              |
+| # matricula       : String                              |
+| # motorEncendido  : boolean                             |
+| # marchaActual    : int                                 |
+| # velocidadActual : int                                 |
+------------------------------------------------------------
+| - MOTOR_DEFAULT     : boolean = false    {static}       |
+| - MARCHA_DEFAULT    : int     = 0        {static}       |
+| - VELOCIDAD_DEFAULT : int     = 0        {static}       |
+------------------------------------------------------------
+| + Vehiculo(marca:String, modelo:String,                 |
+|            color:String, matricula:String)              |
+------------------------------------------------------------
+| + arrancar()                  : void                    |
+| + parar()                     : void                    |
+| + subirMarcha()               : void                    |
+| + bajarMarcha()               : void                    |
+| + getMarca()    / setColor()                            |
+| + getModelo()                                           |
+| + getColor()    / setColor()                            |
+| + getMatricula()                                        |
+| + isMotorEncendido()                                    |
+| + getMarchaActual()  / setMarchaActual()                |
+| + getVelocidadActual() / setVelocidadActual()           |
+| + toString()                  : String                  |
+------------------------------------------------------------
+                         ^
+                         | hereda
+           ______________+_______________
+          /              |               \
+         /               |                \
+
+---------------------------  ---------------------------  ---------------------------
+|   Ejercicio4_Turismo    |  |   Ejercicio4_Camion     |  | Ejercicio4_Motocicleta  |
+---------------------------  ---------------------------  ---------------------------
+| - numPlazas : int       |  | - pesoMaxAutorizado     |  | - cilindrada : int      |
+| - tipoUso   : String    |  |     : double            |  ---------------------------
+---------------------------  | - mercanciaPeligrosa    |  | - LIMITE_CARNET         |
+| - PLAZAS_DEFAULT   = 5  |  |     : boolean           |  |     : int = 125 {static}|
+| - TIPO_USO_DEFAULT      |  ---------------------------  ---------------------------
+|   = "particular"        |  | - PESO_MAX_DEFAULT      |  | + Motocicleta(marca,    |
+|   {static}              |  |   = 1000.0   {static}   |  |   modelo, color,        |
+---------------------------  | - PELIGROSA_DEFAULT     |  |   matricula)            |
+| + Turismo(marca, modelo,|  |   = false    {static}   |  | + Motocicleta(marca,    |
+|   color, matricula)     |  ---------------------------  |   modelo, color,        |
+| + Turismo(marca, modelo,|  | + Camion(marca, modelo, |  |   matricula,            |
+|   color, matricula,     |  |   color, matricula)     |  |   cilindrada:int)       |
+|   numPlazas, tipoUso)   |  | + Camion(marca, modelo, |  ---------------------------
+---------------------------  |   color, matricula,     |  | + getCilindrada(): int  |
+| + getNumPlazas() : int  |  |   pesoMax, peligrosa)   |  | + setCilindrada(int)    |
+| + setNumPlazas(int)     |  ---------------------------  | + requiereCarnet()      |
+| + getTipoUso() : String |  | + getPesoMaxAut():double|  |     : boolean           |
+| + setTipoUso(String)    |  | + setPesoMaxAut(double) |  | + toString() : String  |
+| + toString() : String   |  | + isMercPeligrosa()     |  ---------------------------
+---------------------------  |     : boolean           |
+                             | + setMercPeligrosa(bool)|
+                             | + toString() : String   |
+                             ---------------------------
