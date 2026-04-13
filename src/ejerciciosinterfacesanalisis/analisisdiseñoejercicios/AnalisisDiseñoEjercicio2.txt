@@ -1,0 +1,84 @@
+================================================================================
+  ANÁLISIS Y DISEÑO - EJERCICIO 2 - Futbolista
+================================================================================
+
+1. ANÁLISIS
+
+CLASE: Ejercicio2_Futbolista
+  Implementa: Comparable<Ejercicio2_Futbolista>
+
+  Atributos:
+    - numeroCamiseta : int
+    - nombre         : String
+    - edad           : int
+    - goles          : int
+
+  Constructores:
+    1. Futbolista(numeroCamiseta:int, nombre:String, edad:int, goles:int)
+
+  Métodos:
+    - equals(o:Object) : boolean
+        dos futbolistas son iguales si coinciden numeroCamiseta Y nombre
+    - compareTo(otro:Futbolista) : int
+        ordena primero por numeroCamiseta (creciente)
+        si hay empate en camiseta, ordena por nombre (alfabético)
+    - toString() : String
+
+  Restricciones:
+    - No se implementa hashCode() en el código original
+      (recomendable añadirlo siempre que se sobreescribe equals)
+    - El criterio de igualdad (equals) y el de orden (compareTo)
+      son independientes: igualdad usa camiseta+nombre,
+      orden usa camiseta y luego nombre como desempate
+
+CLASE EJECUTABLE: Ejercicio2_MainFutbolista
+  - Crea una tabla de 5 futbolistas (dos comparten el nº 7)
+  - Ordena con Arrays.sort() y muestra el resultado
+  - El desempate entre camiseta 7 da: Hazard antes que Ronaldo
+
+
+2. DISEÑO
+
+----------------------------------------------------
+|        <<interface>> Java                        |
+|        Comparable<Ejercicio2_Futbolista>         |
+----------------------------------------------------
+| + compareTo(o:Ejercicio2_Futbolista) : int       |
+----------------------------------------------------
+                        ^
+                        | implementa (- - - - ▷)
+                        |
+
+----------------------------------------------------
+|            Ejercicio2_Futbolista                 |
+----------------------------------------------------
+| - numeroCamiseta : int                           |
+| - nombre         : String                        |
+| - edad           : int                           |
+| - goles          : int                           |
+----------------------------------------------------
+| + Futbolista(numeroCamiseta:int, nombre:String,  |
+|              edad:int, goles:int)                |
+----------------------------------------------------
+| + equals(o:Object)                  : boolean    |
+|     (iguales si misma camiseta y nombre)         |
+| + compareTo(otro:Futbolista)        : int         |
+|     (1º por camiseta, 2º por nombre)             |
+| + toString()                        : String     |
+----------------------------------------------------
+
+----------------------------------------------------
+|          Ejercicio2_MainFutbolista               |
+----------------------------------------------------
+| + main(args:String[]) : void                     |
+----------------------------------------------------
+
+
+================================================================================
+  NOTAS DE DISEÑO
+================================================================================
+- compareTo() devuelve el resultado de comparar camisetas primero;
+  solo si son iguales (resultado == 0) se compara por nombre
+- equals() usa tanto numeroCamiseta como nombre para la igualdad
+- Arrays.sort() llama a compareTo() para ordenar, no a equals()
+================================================================================

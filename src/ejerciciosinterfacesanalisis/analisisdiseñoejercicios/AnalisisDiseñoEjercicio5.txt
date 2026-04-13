@@ -1,0 +1,122 @@
+================================================================================
+  ANÁLISIS Y DISEÑO - EJERCICIO 5 - Biblioteca (Ficha)
+================================================================================
+
+1. ANÁLISIS
+
+SUPERCLASE: Ejercicio5_Ficha  (abstracta)
+  Atributos (protected, heredables):
+    - id     : int
+    - titulo : String
+
+  Constructores:
+    1. Ficha(id, titulo)
+
+  Métodos:
+    - prestar() : int   {abstract}   cada subclase devuelve sus días de préstamo
+    - getters / setters de id y titulo
+
+SUBCLASE: Ejercicio5_Libro  extends  Ejercicio5_Ficha
+  Atributos propios:
+    - autor     : String
+    - editorial : String
+
+  Constructores:
+    1. Libro(id, titulo, autor, editorial)
+
+  Métodos:
+    - prestar() : int   devuelve 15
+    - getters / setters de autor y editorial
+
+SUBCLASE: Ejercicio5_Revista  extends  Ejercicio5_Ficha
+  Atributos propios:
+    - numero : int
+    - año    : int
+
+  Constructores:
+    1. Revista(id, titulo, numero, año)
+
+  Métodos:
+    - prestar() : int   devuelve 10
+    - getters / setters de numero y año
+
+SUBCLASE: Ejercicio5_DVD  extends  Ejercicio5_Ficha
+  Atributos propios:
+    - director : String
+    - año      : int
+    - tipo     : String  ("película", "documental" o "serie")
+
+  Constructores:
+    1. DVD(id, titulo, director, año, tipo)
+
+  Métodos:
+    - prestar() : int   devuelve 5
+    - getters / setters de director, año y tipo
+
+CLASE EJECUTABLE: Ejercicio5_Main
+  - Crea un Libro, una Revista y un DVD
+  - Los recorre como array de Ficha (polimorfismo) e imprime los días de préstamo
+
+
+2. DISEÑO
+
+--------------------------------------------
+|             <<abstract>>                 |
+|           Ejercicio5_Ficha               |
+--------------------------------------------
+| # id     : int                           |
+| # titulo : String                        |
+--------------------------------------------
+| + Ficha(id:int, titulo:String)           |
+--------------------------------------------
+| + getId()              : int             |
+| + getTitulo()          : String          |
+| + setTitulo(String)    : void            |
+| + prestar()            : int  {abstract} |
+| + toString()           : String          |
+--------------------------------------------
+                    ^
+                    | hereda
+          __________+__________
+         /           |          \
+        /            |           \
+
+--------------------  --------------------  --------------------
+| Ejercicio5_Libro |  |Ejercicio5_Revista|  |  Ejercicio5_DVD  |
+--------------------  --------------------  --------------------
+| - autor     :    |  | - numero : int   |  | - director:String|
+|     String       |  | - año    : int   |  | - año     : int  |
+| - editorial :    |  --------------------  | - tipo    :String|
+|     String       |  | - DIAS_PRESTAMO  |  |  ("película",    |
+--------------------  |   = 10 {static}  |  |   "documental",  |
+| - DIAS_PRESTAMO  |  --------------------  |   "serie")       |
+|   = 15 {static}  |  | + Revista(id,    |  --------------------
+--------------------  |   titulo, numero,|  | - DIAS_PRESTAMO  |
+| + Libro(id,      |  |   año)           |  |   = 5  {static}  |
+|   titulo, autor, |  --------------------  --------------------
+|   editorial)     |  | + getNumero()    |  | + DVD(id, titulo,|
+--------------------  |     : int        |  |   director, año, |
+| + getAutor()     |  | + setNumero(int) |  |   tipo)          |
+|     : String     |  | + getAño() : int |  --------------------
+| + setAutor(      |  | + setAño(int)    |  | + getDirector()  |
+|     String)      |  | + prestar() : int|  |     : String     |
+| + getEditorial() |  |   (10 días)      |  | + setDirector(   |
+|     : String     |  | + toString()     |  |     String)      |
+| + setEditorial(  |  |     : String     |  | + getAño() : int |
+|     String)      |  --------------------  | + setAño(int)    |
+| + prestar() : int|                        | + getTipo():     |
+|   (15 días)      |                        |     String       |
+| + toString()     |                        | + setTipo(String)|
+|     : String     |                        | + prestar() : int|
+--------------------                        |   (5 días)       |
+                                            | + toString()     |
+                                            |     : String     |
+                                            --------------------
+
+--------------------------------------------
+RESUMEN DÍAS DE PRÉSTAMO
+--------------------------------------------
+Libro   ->  15 días
+Revista ->  10 días
+DVD     ->   5 días
+--------------------------------------------

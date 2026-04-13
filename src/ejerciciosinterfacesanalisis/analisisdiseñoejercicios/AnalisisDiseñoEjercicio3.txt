@@ -1,0 +1,144 @@
+================================================================================
+  ANÁLISIS Y DISEÑO - EJERCICIO 3 - Animales domésticos
+================================================================================
+
+1. ANÁLISIS
+
+INTERFAZ: Ejercicio3_Vivir
+  Métodos que deben implementar todos los animales:
+    - comer()      : void
+    - dormir()     : void
+    - hacerRuido() : void
+
+SUPERCLASE: Ejercicio3_AnimalDomestico  (abstracta)
+  Implementa: Ejercicio3_Vivir
+
+  Atributos (protected, heredables):
+    - nombre : String
+    - raza   : String
+    - peso   : double
+    - color  : String
+
+  Constructores:
+    1. AnimalDomestico(nombre:String, raza:String, peso:double, color:String)
+
+  Métodos implementados (iguales para todos los animales domésticos):
+    - comer()   : void   imprime que el animal está comiendo
+    - dormir()  : void   imprime que el animal está durmiendo
+    - vacunar() : void   imprime que el animal ha sido vacunado
+
+  Métodos abstractos (cada subclase los define a su manera):
+    - hacerRuido() : void     {abstract}
+    - hacerCaso()  : boolean  {abstract}
+
+SUBCLASE: Ejercicio3_Perro  extends  Ejercicio3_AnimalDomestico
+  No añade atributos propios.
+
+  Constructores:
+    1. Perro(nombre, raza, peso, color)  →  llama a super()
+
+  Métodos sobreescritos:
+    - hacerRuido() : void     imprime "¡Guau guau!"
+    - hacerCaso()  : boolean  devuelve true el 90% de las veces
+
+  Métodos propios:
+    - sacarPaseo() : void     imprime que el perro sale a pasear
+
+SUBCLASE: Ejercicio3_Gato  extends  Ejercicio3_AnimalDomestico
+  No añade atributos propios.
+
+  Constructores:
+    1. Gato(nombre, raza, peso, color)  →  llama a super()
+
+  Métodos sobreescritos:
+    - hacerRuido() : void     imprime "Miau..."
+    - hacerCaso()  : boolean  devuelve true el 5% de las veces
+
+  Métodos propios:
+    - toserBolaPelo() : void  imprime que el gato tose una bola de pelo
+
+CLASE EJECUTABLE: Ejercicio3_MainAnimales
+  - Crea un Perro y un Gato
+  - Prueba todos los métodos de cada uno
+  - Usa polimorfismo: recorre un array de AnimalDomestico
+    y llama a hacerRuido() y hacerCaso() en cada elemento
+
+
+2. DISEÑO
+
+--------------------------------------------
+|          <<interface>>                   |
+|        Ejercicio3_Vivir                  |
+--------------------------------------------
+| + comer()      : void                    |
+| + dormir()     : void                    |
+| + hacerRuido() : void                    |
+--------------------------------------------
+                    ^
+                    | implementa (- - - - ▷)
+                    |
+
+--------------------------------------------
+|           <<abstract>>                   |
+|      Ejercicio3_AnimalDomestico          |
+--------------------------------------------
+| # nombre : String                        |
+| # raza   : String                        |
+| # peso   : double                        |
+| # color  : String                        |
+--------------------------------------------
+| + AnimalDomestico(nombre:String,         |
+|                   raza:String,           |
+|                   peso:double,           |
+|                   color:String)          |
+--------------------------------------------
+| + comer()             : void             |
+| + dormir()            : void             |
+| + vacunar()           : void             |
+| + hacerRuido()        : void  {abstract} |
+| + hacerCaso()         : boolean{abstract}|
+--------------------------------------------
+                    ^
+                    | hereda (———▷)
+          __________+__________
+         /                      \
+        /                        \
+
+------------------------   ------------------------
+|   Ejercicio3_Perro   |   |   Ejercicio3_Gato    |
+------------------------   ------------------------
+|  (sin atributos      |   |  (sin atributos      |
+|   propios nuevos)    |   |   propios nuevos)    |
+------------------------   ------------------------
+| + Perro(nombre,raza, |   | + Gato(nombre,raza,  |
+|   peso, color)       |   |   peso, color)       |
+------------------------   ------------------------
+| + hacerRuido():void  |   | + hacerRuido():void  |
+|   ("¡Guau guau!")    |   |   ("Miau...")         |
+| + hacerCaso():boolean|   | + hacerCaso():boolean|
+|   (true el 90%)      |   |   (true el 5%)       |
+------------------------   ------------------------
+| + sacarPaseo():void  |   | + toserBolaPelo()    |
+|   (método propio)    |   |     : void           |
+------------------------   |   (método propio)    |
+                           ------------------------
+
+--------------------------------------------
+|        Ejercicio3_MainAnimales           |
+--------------------------------------------
+| + main(args:String[]) : void             |
+--------------------------------------------
+
+
+================================================================================
+  NOTAS DE DISEÑO
+================================================================================
+- Ejercicio3_Vivir es una interfaz: define el contrato común de todo animal
+- AnimalDomestico es abstracta: no se puede instanciar directamente
+- comer() y dormir() se implementan en AnimalDomestico (igual para todos)
+- hacerRuido() y hacerCaso() son abstractos: cada animal los define distinto
+- vacunar() no está en la interfaz pero sí en la clase abstracta (común)
+- Polimorfismo: un array AnimalDomestico[] puede contener Perros y Gatos
+- Math.random() < 0.90 da true el 90% de las veces (Perro)
+- Math.random() < 0.05 da true el  5% de las veces (Gato)
+================================================================================

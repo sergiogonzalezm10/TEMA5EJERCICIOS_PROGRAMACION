@@ -1,0 +1,73 @@
+================================================================================
+  ANÁLISIS Y DISEÑO - EJERCICIO 1 - Socio
+================================================================================
+
+1. ANÁLISIS
+
+CLASE: Ejercicio1_Socio
+  Implementa: Comparable<Ejercicio1_Socio>
+
+  Atributos:
+    - id     : int
+    - nombre : String
+    - edad   : int
+
+  Constructores:
+    1. Socio(id:int, nombre:String, edad:int)
+
+  Métodos:
+    - compareTo(otro:Socio) : int
+        ordena por id de forma creciente
+        usa Integer.compare(this.id, otro.id)
+    - toString() : String
+
+  Restricciones:
+    - No hay validación de datos en esta clase
+    - El orden natural de los socios es por id creciente
+
+CLASE EJECUTABLE: Ejercicio1_MainSocio
+  - Crea 3 socios desordenados
+  - Comprueba compareTo manualmente (positivo, negativo, cero)
+  - Crea un array de socios, lo ordena con Arrays.sort() y lo muestra
+
+
+2. DISEÑO
+
+----------------------------------------------------
+|        <<interface>> Java                        |
+|        Comparable<Ejercicio1_Socio>              |
+----------------------------------------------------
+| + compareTo(o:Ejercicio1_Socio) : int            |
+----------------------------------------------------
+                        ^
+                        | implementa (- - - - ▷)
+                        |
+
+----------------------------------------------------
+|              Ejercicio1_Socio                    |
+----------------------------------------------------
+| - id     : int                                   |
+| - nombre : String                                |
+| - edad   : int                                   |
+----------------------------------------------------
+| + Socio(id:int, nombre:String, edad:int)         |
+----------------------------------------------------
+| + compareTo(otro:Ejercicio1_Socio) : int         |
+|     (ordena por id creciente)                    |
+| + toString() : String                            |
+----------------------------------------------------
+
+----------------------------------------------------
+|           Ejercicio1_MainSocio                   |
+----------------------------------------------------
+| + main(args:String[]) : void                     |
+----------------------------------------------------
+
+
+================================================================================
+  NOTAS DE DISEÑO
+================================================================================
+- Comparable<T> es una interfaz de Java que obliga a implementar compareTo()
+- Arrays.sort() usa compareTo() internamente para ordenar el array
+- compareTo devuelve: negativo (menor), 0 (igual), positivo (mayor)
+================================================================================
